@@ -1,0 +1,33 @@
+<!-- templates/record_absence.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Record absence</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Record absence</h2>
+    <form action="/record-absence" method="post">
+      <label>Student ID</label>
+      <input name="student_id" required>
+      <label>Course code</label>
+      <input name="course_code" required>
+      <label>Group</label>
+      <input name="group" required>
+      <label>Week (1-14)</label>
+      <input name="week" type="number" min="1" max="20" required>
+      <label>Class label (Class1/Class2/...)</label>
+      <input name="class_label" required>
+      <label>Hours missed</label>
+      <input name="hours" type="number" min="1" required>
+      <label>Date (YYYY-MM-DD)</label>
+      <input name="date" type="date" required>
+      <button type="submit">Save</button>
+    </form>
+
+    {% if msg %}<p class="success">{{ msg }}</p>{% endif %}
+  </div>
+</body>
+</html>

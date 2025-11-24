@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Alerts</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Blast alerts</h2>
+    <form action="/alerts" method="get">
+      <label>Course code</label>
+      <input name="course_code" value="{{ course_code or '' }}" required>
+      <label>Group</label>
+      <input name="group" value="{{ group or '' }}" required>
+      <label>Total contact hours (per semester)</label>
+      <input name="total_hours" type="number" min="1" value="{{ total_hours or '' }}" required>
+      <button type="submit">List students</button>
+    </form>
+
+    {% if rows %}
+    <h3>Students with ≥ 7% absenteeism</h3>
+    <form action="/send-alerts" method="post">
+      <input type="hidden" name="course_code" value="{{ course_code }}">
+      <input type="hidden" name="group" value="{{ group }}">
+      <input type="hidden" name="total_hours" value="{{ total_hours }}">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>%</th>
+            <th>Sent 7%</th>
+            <th>Sent 10%</th>
+            <th>Sent 15%</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for r in rows %}
+          <tr>
+            <td><input type="checkbox" name="selected" value="{{ r.student_id }}"></td>
+            <td>{{ r.student_id }}</td>
+            <td>{{ r.name }}</td>
+            <td>{{ r.phone }}</td>
+            <td>{{ r.email }}</td>
+            <td>{{ r.percent }}%</td>
+            <td>{{ r.sent7 }}</td>
+            <td>{{ r.sent10 }}</td>
+            <td>{{ r.sent15 }}</td>
+            <td>{{ r.count }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <button type="submit">Send email alerts</button>
+    </form>
+    {% endif %}
+
+    {% if msg %}<p class="success">{{ msg }}</p>{% endif %}
+  </div>
+</body>
+</html>
+

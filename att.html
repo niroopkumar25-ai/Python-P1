@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Alert System</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+        .box { background: #fff; padding: 20px; width: 350px; margin: auto; border-radius: 10px; }
+        input { width: 100%; padding: 8px; margin: 5px 0; }
+        button { width: 100%; padding: 10px; background: green; color: white; border: none; }
+        #result { margin-top: 20px; background: #e8ffe8; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Attendance Calculator</h2>
+
+    <label>Student Name:</label>
+    <input id="name">
+
+    <label>Hours Missed:</label>
+    <input id="missed" type="number">
+
+    <label>Total Hours:</label>
+    <input id="total" type="number">
+
+    <button onclick="calc()">Calculate</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function calc() {
+    let name = document.getElementById("name").value;
+    let missed = Number(document.getElementById("missed").value);
+    let total = Number(document.getElementById("total").value);
+
+    let percent = (missed / total) * 100;
+    percent = percent.toFixed(2);
+
+    let message = `${name} has ${percent}% absenteeism.<br>`;
+
+    if (percent >= 20) message += "⚠ Exam Bar Warning!";
+    else if (percent >= 15) message += "⚠ 15% Alert!";
+    else if (percent >= 10) message += "⚠ 10% Alert!";
+    else if (percent >= 7) message += "⚠ 7% Alert!";
+
+    document.getElementById("result").innerHTML = message;
+}
+</script>
+
+</body>
+</html>

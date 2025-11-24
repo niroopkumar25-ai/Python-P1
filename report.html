@@ -1,0 +1,48 @@
+<!-- templates/report.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Absenteeism report</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Absenteeism report</h2>
+    <form action="/report" method="get">
+      <label>Course code</label>
+      <input name="course_code" value="{{ course_code or '' }}" required>
+      <label>Group</label>
+      <input name="group" value="{{ group or '' }}" required>
+      <label>Total contact hours (per semester)</label>
+      <input name="total_hours" type="number" min="1" value="{{ total_hours or '' }}" required>
+      <button type="submit">Generate</button>
+    </form>
+
+    {% if rows %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th>Hours missed</th>
+          <th>Absenteeism %</th>
+          <th>Thresholds</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r.student_id }}</td>
+          <td>{{ r.name }}</td>
+          <td>{{ r.hours_missed }}</td>
+          <td>{{ r.percent }}%</td>
+          <td>{{ r.thresholds }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</body>
+</html>

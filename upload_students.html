@@ -1,0 +1,19 @@
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Upload students</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Upload student list (CSV)</h2>
+    <p>Expected columns: student_id,name,programme,part,course_code,group,phone,email</p>
+    <form action="/upload-students" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".csv" required>
+      <button type="submit">Upload</button>
+    </form>
+    {% if msg %}<p class="success">{{ msg }}</p>{% endif %}
+  </div>
+</body>
+</html>
